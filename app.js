@@ -110,6 +110,7 @@ app.delete('/api/colegio/:id', (req,res)=>{
     });
 });
 
+
 app.get('/api/session', (req,res)=>{
     conexion.query('SELECT * FROM tb_iniciar_session', (error,filas)=>{
         if(error){
@@ -121,46 +122,21 @@ app.get('/api/session', (req,res)=>{
     })
 });
 //para session
-app.post('/api/session/auth', async (req, res)=> {
-	const USSER = req.body.USSER;
-	const PASSWORD = req.body.PASSWORD;    
-    let passwordHash = await bcrypt.hash(PASSWORD, 8);
-	if (USSER && PASSWORD) {
-		connection.query('SELECT * FROM tb_iniciar_session WHERE USSER = ?', [USSER], async (error, results, fields)=> {
-			if( results.length == 0 || !(await bcrypt.compare(PASSWORD, results[0].PASSWORD)) ) {    
-				res.render('login', {
-                        alert: true,
-                        alertTitle: "Error",
-                        alertMessage: "USUARIO y/o PASSWORD incorrectas",
-                        alertIcon:'error',
-                        showConfirmButton: true,
-                        timer: false,
-                        ruta: 'login'    
-                    });
-				
-				//Mensaje simple y poco vistoso
-                //res.send('Incorrect Username and/or Password!');				
-			} else {         
-				//creamos una var de session y le asignamos true si INICIO SESSION       
-				req.session.loggedin = true;                
-				req.session.name = results[0].name;
-				res.render('login', {
-					alert: true,
-					alertTitle: "Conexión exitosa",
-					alertMessage: "¡LOGIN CORRECTO!",
-					alertIcon:'success',
-					showConfirmButton: false,
-					timer: 1500,
-					ruta: ''
-				});        			
-			}			
-			res.end();
+app.post('/api/session/auth', (req, res)=> {
+	let USSER = req.body.USSER;
+	let PASSWORD = req.body.PASSWORD;    
+    /* let passwordHash = await bcrypt.hash(PASSWORD, 8); */ 
+        conexion.query('SELECT * FROM tb_iniciar_session WHERE USSER=? and PASSWORD=?', {USSER:USSER, PASSWORD:PASSWORD}, (error, results)=> {
+			if( error ) { 
+                    throw error;
+        
+                }else{
+                    res.send(results);
+                    
+                }
 		});
-	} else {	
-		res.send('Please enter user and Password!');
-		res.end();
-	}
 });
+
 
 const puerto = process.env.PUERTO || 3000 ;
 
