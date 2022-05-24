@@ -132,14 +132,22 @@ app.post('/api/session/auth', (req, res)=> {
     /* let passwordHash = await bcrypt.hash(PASSWORD, 8); {USSER:USSER, PASSWORD:_PASSWORD},*/ 
     if(_USSER && _PASSWORD){
         conexion.query(sql, (error, results)=> {
-			if(!_USSER && !_PASSWORD){
-                res.send('usuario es incorrecto')
+
+			if(results.length==0 || results==false){
+                res.send('Incorrect Username and/or Password!');
+                
             }else{
-                res.send('usuario ingresado correctamente')
+                console.log('usuario ingresado correctamtente');
+                /* req.session.loggedin=true; */
+                /* req.session.name=results[0].name; */
+                res.send(results)
             }
 		});
+
+
     }else{
-        console.log("no hay usuario ni contrasena");
+        res.send('Please enter user and Password!');
+		res.end();
     }
 });
 
