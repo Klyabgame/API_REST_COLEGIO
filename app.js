@@ -123,18 +123,24 @@ app.get('/api/session', (req,res)=>{
 });
 //para session
 app.post('/api/session/auth', (req, res)=> {
-	let USSER = req.body.USSER;
-	let PASSWORD = req.body.PASSWORD;    
-    /* let passwordHash = await bcrypt.hash(PASSWORD, 8); */ 
-        conexion.query('SELECT * FROM tb_iniciar_session WHERE USSER=? and PASSWORD=?', {USSER:USSER, PASSWORD:PASSWORD}, (error, results)=> {
-			if( error ) { 
-                    throw error;
-        
-                }else{
-                    res.send(results);
-                    
-                }
+	let _USSER = req.body.USSER;
+	let _PASSWORD = req.body.PASSWORD;
+    let sql=`SELECT * FROM tb_iniciar_session WHERE USSER='${_USSER}' and PASSWORD=${_PASSWORD}`;
+    console.log(sql);
+    console.log(_USSER); 
+    console.log(_PASSWORD);  
+    /* let passwordHash = await bcrypt.hash(PASSWORD, 8); {USSER:USSER, PASSWORD:_PASSWORD},*/ 
+    if(_USSER && _PASSWORD){
+        conexion.query(sql, (error, results)=> {
+			if(!_USSER && !_PASSWORD){
+                res.send('usuario es incorrecto')
+            }else{
+                res.send('usuario ingresado correctamente')
+            }
 		});
+    }else{
+        console.log("no hay usuario ni contrasena");
+    }
 });
 
 
