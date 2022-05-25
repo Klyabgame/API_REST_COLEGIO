@@ -125,7 +125,7 @@ app.get('/api/session', (req,res)=>{
 app.post('/api/session/auth', (req, res)=> {
 	let _USSER = req.body.USSER;
 	let _PASSWORD = req.body.PASSWORD;
-    let sql=`SELECT * FROM tb_iniciar_session WHERE USSER='${_USSER}' and PASSWORD=${_PASSWORD}`;
+    let sql=`SELECT * FROM tb_iniciar_session WHERE USSER='${_USSER}' and PASSWORD='${_PASSWORD}'`;
     console.log(sql);
     console.log(_USSER); 
     console.log(_PASSWORD);  
