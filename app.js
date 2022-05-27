@@ -158,7 +158,7 @@ app.post('/api/session/auth', (req, res)=> {
 //INNER JOIN
 app.get(`/api/session/auth/:usser`, (req,res)=>{
     /* let _USSER=req.body.USSER; */
-    let sql2=`SELECT APELLIDOS,NOMBRES FROM tb_iniciar_session INNER JOIN tb_registro 
+    let sql2=`SELECT DNI,APELLIDOS,NOMBRES,CORREO,TELEFONO,DIRECCION,EDAD FROM tb_iniciar_session INNER JOIN tb_registro 
     ON tb_iniciar_session.ID_REGISTRO=tb_registro.ID_REGISTRO WHERE USSER=?`;
     console.log(sql2);
     conexion.query(sql2,[req.params.usser],(error,resultado)=>{
