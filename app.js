@@ -172,6 +172,31 @@ app.get(`/api/session/auth/:usser`, (req,res)=>{
 });
 
 
+//conexion para curso
+app.get('/api/curso', (req,res)=>{
+    conexion.query('SELECT * FROM tb_matricula', (error,filas)=>{
+        if(error){
+            throw error;
+
+        }else{
+            res.send(filas);
+        }
+    })
+});
+
+//conexion alumno por dni para su curso
+app.get('/api/curso/:DNI', (req,res)=>{
+    conexion.query('SELECT APELLIDOS, NOMBRES,tb_curso.ID_CURSO,NAME_CURSO,NIVEL,GRADO_ACADEMICO FROM tb_matricula INNER JOIN tb_alumno ON tb_matricula.ID_ALUMNO=tb_alumno.ID_ALUMNO  INNER JOIN tb_registro ON tb_alumno.ID_REGISTRO=tb_registro.ID_REGISTRO INNER JOIN tb_curso ON tb_matricula.ID_CURSO=tb_curso.ID_CURSO INNER JOIN tb_profesor ON tb_matricula.ID_PROFESOR=tb_profesor.ID_PROFESOR WHERE DNI=?',[req.params.DNI], (error,fila)=>{
+        if(error){
+            throw error;
+
+        }else{
+            res.send(fila);
+            /* res.send(fila[0].Nombres); */
+        }
+    })
+});
+
 
 
 const puerto = process.env.PUERTO || 3000 ;
