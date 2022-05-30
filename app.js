@@ -186,7 +186,7 @@ app.get('/api/curso', (req,res)=>{
 
 //conexion alumno por dni para su curso
 app.get('/api/curso/:DNI', (req,res)=>{
-    conexion.query('SELECT APELLIDOS, NOMBRES,tb_curso.ID_CURSO,NAME_CURSO,NIVEL,GRADO_ACADEMICO FROM tb_matricula INNER JOIN tb_alumno ON tb_matricula.ID_ALUMNO=tb_alumno.ID_ALUMNO  INNER JOIN tb_registro ON tb_alumno.ID_REGISTRO=tb_registro.ID_REGISTRO INNER JOIN tb_curso ON tb_matricula.ID_CURSO=tb_curso.ID_CURSO INNER JOIN tb_profesor ON tb_matricula.ID_PROFESOR=tb_profesor.ID_PROFESOR WHERE DNI=?',[req.params.DNI], (error,fila)=>{
+    conexion.query('SELECT *FROM tb_matricula INNER JOIN tb_alumno ON tb_matricula.ID_ALUMNO=tb_alumno.ID_ALUMNO  INNER JOIN tb_registro ON tb_alumno.ID_REGISTRO=tb_registro.ID_REGISTRO INNER JOIN tb_curso ON tb_matricula.ID_CURSO=tb_curso.ID_CURSO INNER JOIN tb_profesor ON tb_matricula.ID_PROFESOR=tb_profesor.ID_PROFESOR LEFT JOIN tb_notas ON tb_matricula.ID_MATRICULA=tb_notas.ID_NOTAS WHERE DNI=?',[req.params.DNI], (error,fila)=>{
         if(error){
             throw error;
 
@@ -195,6 +195,39 @@ app.get('/api/curso/:DNI', (req,res)=>{
             /* res.send(fila[0].Nombres); */
         }
     })
+});
+//notas
+app.get('/api/notas', (req,res)=>{
+    conexion.query('SELECT * FROM tb_notas', (error,filas)=>{
+        if(error){
+            throw error;
+
+        }else{
+            res.send(filas);
+        }
+    })
+});
+
+
+//editar y actualizar notas
+app.put('/api/notas/:DNI/:CURSO', (req,res)=>{
+    let DNI=req.params.DNI;
+    let CURSO=req.params.CURSO;
+    let P_BIMESTRE=req.body.P_BIMESTRE;
+    let S_BIMESTRE=req.body.S_BIMESTRE;
+    let T_BIMESTRE=req.body.T_BIMESTRE;
+    let C_BIMESTRE=req.body.C_BIMESTRE;
+    
+    let sql="UPDATE tb_notas INNER JOIN tb_matricula ON tb_notas.ID_MATRICULA=tb_matricula.ID_MATRICULA INNER JOIN tb_alumno ON tb_matricula.ID_ALUMNO=tb_alumno.ID_ALUMNO INNER JOIN tb_registro ON tb_alumno.ID_REGISTRO=tb_registro.ID_REGISTRO INNER JOIN tb_curso on tb_matricula.ID_CURSO=tb_curso.ID_CURSO SET P_BIMESTRE=?, S_BIMESTRE=?, T_BIMESTRE=?, C_BIMESTRE=? WHERE DNI=? AND NAME_CURSO='?'";
+    conexion.query(sql,[P_BIMESTRE,S_BIMESTRE,T_BIMESTRE,C_BIMESTRE, DNI, CURSO], function(error,results){
+        if(error){
+            throw error;
+
+        }else{
+            res.send(results);
+            
+        }
+    });
 });
 
 
