@@ -9,11 +9,12 @@ app.use(cors());
 
 
 //establecemos los parametross
+
 var conexion= mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'',
-    database:'colegio'
+    host:'us-cdbr-east-05.cleardb.net',
+    user:'bcc3ba0a62ffe7',
+    password:'dbb13e49',
+    database:'heroku_db9e0b9888a14'
 });
 
 //probar la conexion
