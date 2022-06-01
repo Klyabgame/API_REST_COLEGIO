@@ -233,8 +233,8 @@ app.put('/api/notas/:DNI/:CURSO', (req,res)=>{
 
 
 
-const puerto = process.env.puerto  ;
+const PORT = process.env.PORT || 3000 ;
 
-app.listen(puerto, function(){
-    console.log("servidor ok en puerto:"+puerto);
+app.listen(PORT, function(){
+    console.log("servidor ok en puerto:"+PORT);
 });
