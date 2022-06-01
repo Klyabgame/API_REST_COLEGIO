@@ -11,10 +11,10 @@ app.use(cors());
 //establecemos los parametross
 
 var conexion= mysql.createConnection({
-    host:'us-cdbr-east-05.cleardb.net',
-    user:'bcc3ba0a62ffe7',
-    password:'dbb13e49',
-    database:'heroku_db9e0b9888a14'
+    host:'ebh2y8tqym512wqs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    user:'kbip7sri509ka6gk',
+    password:'lchyq9vkgmsabtaw',
+    database:'nm9ufcxidaolj1b9'
 });
 
 //probar la conexion
