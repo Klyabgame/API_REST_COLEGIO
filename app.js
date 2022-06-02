@@ -11,10 +11,10 @@ app.use(cors());
 //establecemos los parametross
 
 var conexion= mysql.createConnection({
-    host:'ebh2y8tqym512wqs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    user:'kbip7sri509ka6gk',
-    password:'lchyq9vkgmsabtaw',
-    database:'nm9ufcxidaolj1b9'
+    host:'72.167.69.115',
+    user:'franz',
+    password:'12345',
+    database:'colegio'
 });
 
 //probar la conexion
