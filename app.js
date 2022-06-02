@@ -10,16 +10,16 @@ app.use(cors());
 
 //establecemos los parametross
 //mysql.createConnection
-var conexion= ({
+var connection= ({
     host:'72.167.69.115',
     user:'franz',
     password:'12345',
     database:'colegio'
 });
-var connection;
+var conexion;
 function handleDisconnect(){
-    connection=mysql.createConnection(conexion);
-    connection.connect(function(err){
+    conexion=mysql.createConnection(connection);
+    conexion.connect(function(err){
         if(err){
             console.log('error when connecta la bd:',err);
             setTimeout(handleDisconnect,2000);
@@ -27,7 +27,7 @@ function handleDisconnect(){
         }
         
     });
-    connection.on('error',function(err){
+    conexion.on('error',function(err){
         console.log('db error',err);
         if(err.code==='PROTOCOL_CONNECTION_LOST'){
             handleDisconnect();
