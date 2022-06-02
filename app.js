@@ -40,14 +40,14 @@ handleDisconnect();
 
 //probar la conexion
 
-conexion.connect(function(error){
+/* conexion.connect(function(error){
     if(error){
         throw error;
 
     }else{
         console.log("conexion es exitosa");
     }
-});
+}); */
 
 app.get('/', function(req,res){
     res.send('ruta INICIO');
